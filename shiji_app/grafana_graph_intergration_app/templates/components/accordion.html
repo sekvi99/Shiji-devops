@@ -1,0 +1,11 @@
+<article>
+    <button onclick="handleAccordion('{{ title }}')" class="accord accord_closed">
+            {{ title }}
+        <span class="material-symbols-outlined">
+            expand_more
+        </span>
+    </button>
+    <div id="{{title}}" class="hide">
+        <p>{{ body }}</p>
+    </div>
+</article>

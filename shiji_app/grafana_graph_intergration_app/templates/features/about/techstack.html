@@ -1,0 +1,12 @@
+ <!-- Tech Stack -->
+ <section>
+    <div class="group1">
+        <h2>Tech Stack</h2>
+        <p>In est ante in nibh mauris cursus mattis. Pellentesque dignissim enim sit amet venenatis urna cursus eget nunc.</p>
+    </div>
+    <div class="group2">
+    {% for item in techstack %}
+        {% include "../../components/accordion.html" with title=item.title body=item.body  %}
+    {% endfor %}
+    </div>
+</section>
