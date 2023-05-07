@@ -1,0 +1,29 @@
+.hide {
+    display: none;
+}
+
+.show {
+    display: block;
+    margin-top: 8px;
+}
+
+
+.accord {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: transparent;
+    color: var(--text);
+    padding: inherit;
+    align-items: center;
+    text-align: left;
+    padding: 0;
+    min-height: 32px;
+    
+}
+
+.accord:hover {
+    background-color: var(--primary-main);
+    color: var(--primary-dark);
+}

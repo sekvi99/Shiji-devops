@@ -1,0 +1,219 @@
+
+  @font-face {
+    font-family: 'SourceCodePro';
+    src: local('SourceCodePro'),
+         url('../fonts/SourceCodePro.ttf') format("truetype");
+}
+
+
+@font-face {
+    font-family: 'Unbounded';
+    src: local('Unbounded'),
+         url('../fonts/Unbounded.ttf') format("truetype");
+}
+
+:root {
+	--font-display: "Unbounded";
+	--font-body: "SourceCodePro";
+
+	/* Theme Color 1 */
+    --primary-dark: #3C492B;
+    --primary-main: #0073f7;
+    --primary-light: #00ffe5;
+
+    /* Common */
+    --background: #fff;
+    --grey: #D9D9D9;
+    --text: #000;
+
+    /* Others */
+    --red: #FF0000;
+    --blue: #0000FF;
+    --green: #00FF00;
+
+    /* Alerts */
+    --alert-box: #597ced;
+
+    /* Spacing */
+    --spacing: 8px;
+
+}
+
+* {
+	margin: 0;
+	padding: 0;
+    font-family: var(--font-body);
+}
+
+::selection {
+	/* Set background color for selected text */
+	background: var(--blue);
+	color: var(--text);
+    font-weight: bold;
+    
+}
+
+body {
+    min-height: 100vh;   
+    margin: 0  auto;
+}
+
+.fullheight {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+  }
+
+.easy_readable {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+/* Layout FlexBox helpers */
+.flex {
+    display: flex;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.justify-content-center {
+    justify-content: center;
+}
+
+/* Temporary layout align helper */
+div:first-child {
+    outline: 1px solid transparent;  
+}
+
+div > div {
+    border: 1px solid transparent;
+}
+
+
+
+
+
+/* Typography */
+    /* Display */
+h2 {
+    font-size: 36px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-align: left;
+}
+
+    /* Title */
+h3 {
+    font-size: 28px;
+    font-family: var(--font-display);
+    font-weight: 500;
+}
+
+
+    /* Subtitle */
+h3 {
+    font-size: 28px;
+    font-family: var(--font-display);   
+}
+
+    /* Body */
+p {
+    font-size: 24px;
+    line-height: 40.3px;
+    
+}
+
+    /* Table Cell 1 */
+.tc1 {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+    /* Table Cell 2 */
+.tc1 {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+
+
+button {
+    font-size: 18px;
+    font-weight: 700;
+    font-family: var(--font-display);
+    color: var(--primary-dark);
+    border-radius: 0;
+
+    display: inline-block;
+	padding: 16px 12px;
+	text-align: center;
+	text-decoration: none;
+    text-transform: uppercase;
+	white-space: nowrap;
+	border: 0;
+    cursor: pointer;
+    
+}
+
+button:hover {
+    background-color: var(--primary-light);
+}
+
+.btn-contained {
+    background-color: var(--primary-main);
+}
+
+.btn-outlined {
+    outline: 1px solid var(--primary-dark);
+}
+
+.btn-text {
+    background: transparent;
+}
+
+
+caption {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+label {
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+}
+
+input {
+    border-radius: 2px;
+    padding: 16px;
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 0em;
+    text-align: left;
+}
+
+
+
+/* Link stylees */
+
+a:-webkit-any(a) {
+    color: var(--blue);
+}
+
+
+.a-clear {
+    text-decoration: none!important;
+    color: var(--text);
+
+}

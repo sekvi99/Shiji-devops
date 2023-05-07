@@ -1,0 +1,88 @@
+.form-wrapper 
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: max-content;
+    flex-direction: column;
+    margin-top: 100px;
+    position: relative;
+}
+
+.form-wrapper h2
+{
+  margin-bottom: 25px;
+  line-height: 1em;
+  font-weight: 500;
+  padding-left: 10px;
+  border-left: 5px solid #0073f7;
+  font-size: 30px;
+}
+
+.form 
+{
+    padding: 24px;
+    border: 1px solid var(--text);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+.form-group 
+{
+    max-width: 450px;
+    min-width: 320px;
+    margin-bottom: 50px;
+    display: flex;
+
+    flex-direction: column;
+    position: relative;
+}
+
+.form-wrapper .form-group:last-child
+{
+  margin-bottom: 0px;
+}
+
+.form-group input
+{
+  position: absolute;
+  padding: 10px;
+  top: 0;
+  left: 0;
+  width: 93%;
+  background: transparent;
+}
+
+.form-group span
+{
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  padding: 10px;
+  display: inline-block;
+  font-weight: 300;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.form-group input:focus ~ span,
+.form-group input:valid ~ span
+{
+  transform: translateX(105px) translateY(-35px);
+  font-size: 16px;
+} 
+
+.form-group input:invalid ~ span
+{
+  font-size: 16px;
+}
+
+.form-header 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

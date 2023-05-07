@@ -1,0 +1,18 @@
+.logo-box 
+{
+    padding: 16px 48px;
+}
+
+.logo-box h1 
+{
+    font-family: var(--font-display);
+}
+
+#appbar-logo 
+{
+    width: 100px;
+    height: 36px;
+    padding: 4px;
+    margin-right: 4px;
+    background-color: white;
+}

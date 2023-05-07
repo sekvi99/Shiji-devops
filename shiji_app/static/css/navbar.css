@@ -1,0 +1,31 @@
+nav 
+{
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 16px;
+}
+
+.choosen 
+{
+    background-color: var(--primary-light)!important;
+    border-bottom: 2px solid var(--primary-dark)!important;
+}
+
+.navLink  
+{
+    background-color: transparent;
+    border-bottom: 2px solid transparent;
+    font-size: 22px;
+    padding: 8px 12px;
+    color: var(--text)!important;
+    cursor: pointer;
+    
+    text-transform: uppercase;
+}
+
+.navLink:hover 
+{
+    background-color: var(--primary-main)!important;
+    border-bottom: 2px solid var(--primary-dark);
+}

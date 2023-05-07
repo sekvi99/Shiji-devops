@@ -1,0 +1,51 @@
+  :root {
+    /* Alerts */
+  --alert-error: #FDEDED;
+  --alert-error-text: #6E3534;
+  --alert-error-icon: #D74242;
+  
+  --alert-success: #EDF7ED;
+  --alert-success-text: #4D6E4E;
+  --alert-success-icon: #418945;
+}
+
+.alert-container {
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+.alert-success {
+background-color: var(--alert-success);
+color: var(--alert-success-text);
+}
+
+.alert-success > span {
+color: var(--alert-success-icon);
+}
+
+.alert-error {
+background-color: var(--alert-error);
+color: var(--alert-error-text);
+}
+
+.alert-error > span {
+color: var(--alert-error-icon);
+}
+.hide_alert {
+display: none!important;
+}
+
+.alert {
+padding: 12px;
+display: flex;
+flex-direction: row;
+align-items: center;
+gap: 12px;
+max-width: 400px;
+}
