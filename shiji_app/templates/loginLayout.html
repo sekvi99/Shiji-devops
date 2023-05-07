@@ -1,0 +1,33 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Required css sheets -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/appbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+    <link rel="stylesheet" href="{% static 'css/alerts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <link rel="stylesheet" href="{% static 'css/logo.css' %}">
+
+    <!-- Required Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,700,0,0" />
+    <title>{% block title %}{% endblock title %}</title>
+  </head>
+  <body class="fullheight">
+    
+    <div class="alert-container">
+      {% for message in messages %}
+        {% include "components/alert.html" with label=message  %}
+      {% endfor %}
+    </div>
+      
+    {% block content %}     
+    {% endblock content %}
+    {% include "footer.html" %}
+  </body>
+</html>

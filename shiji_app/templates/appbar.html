@@ -1,0 +1,23 @@
+{% load static %}
+<header class="flex space-between">
+    {% comment %} TODO Add propper url for home page {% endcomment %}
+    <a href="{% url 'grafana_app:home'  %}" class="a-logo logo-out-of-box">
+        <div class="flex align-items-center logo-box">
+            <img src="{% static 'shiji-logo.png' %}" alt="App's logo" id="appbar-logo" >
+        </div>
+    </a>
+    
+    {% if user.is_authenticated %}
+    <div class="flex align-items-center">
+        <a href="{% url 'login_app:logout'%}" class="a-clear" >
+            <button class="btn-contained">Log out</button>
+        </a>
+    </div>
+    {% else %}
+    <div class="flex align-items-center">
+        <a href="{% url 'login_app:login'%}" class="a-clear" >
+            <button>Log In</button>
+        </a>
+    </div>
+    {% endif %}
+</header>
