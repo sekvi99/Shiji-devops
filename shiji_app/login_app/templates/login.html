@@ -1,0 +1,31 @@
+{% extends 'loginLayout.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+  <!--Container for login form-->
+  <section class="form-wrapper">
+    {% include "components/logo.html" %}    
+    <form method = "POST" action = "" class="form">
+      <div class="form-header">
+      <caption>Shiji DevOps</caption>
+      <h2>Access after login</h2>
+    </div>
+
+    <!--Input for username-->
+    <div class="form-group">
+      {% csrf_token %}
+      <input type="text" id="inputusername" name="username" required pattern="\S+"/>
+      <span>Username</span>
+    </div>
+    
+    <!--Input for password-->
+    <div class="form-group">
+      <input type="password" id="inputpassword" name="password" required pattern="\S+"/>
+      <span>Password</span>
+    </div>
+
+    <!--Login button-->
+    <button class="btn-contained" type="Submit">Log in</button>
+  </form>
+</section>
+{% endblock content %}

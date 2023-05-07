@@ -1,0 +1,27 @@
+<div class="alert alert-{{ label.tags }}" id="{{label}}">
+    <span class="material-symbols-outlined">
+      {% if label.tags == "success" %}
+        check_circle
+      {% endif %}
+      {%if label.tags == "error" %}
+        check_circle
+      {% endif %}
+    </span> 
+    <caption>
+      {{ label }}
+    </caption>
+</div>
+
+<script>
+    let prop = "{{label}}";
+
+    function handleAlert(id) {
+      let z = document.getElementById(id)
+      
+      setInterval(() => {
+        z.className += " hide_alert";
+      }, 10000);
+    }
+    
+    handleAlert(prop);
+</script>
