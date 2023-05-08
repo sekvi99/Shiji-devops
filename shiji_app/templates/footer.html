@@ -1,4 +1,11 @@
 <footer>
     <caption>Automation The Future - Shiji DevOps</caption>
     <a href="https://github.com/sekvi99/Shiji-devops">Source Code</a>
+    {% if not user.is_authenticated %}
+        {% if 'login' in request.resolver_match.url_name %}
+            <a href="{% url 'login_app:register' %}">Register</a>
+        {% elif 'register' in request.resolver_match.url_name %}
+            <a href="{% url 'login_app:login' %}">Login</a>
+        {% endif %}
+    {% endif %}
 </footer>
