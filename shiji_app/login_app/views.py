@@ -26,7 +26,6 @@ def login_page(request) -> render:
     """
     # If user is already authenticated with token, only redirect
     if request.user.is_authenticated:
-        # TODO Add redirect to home page after its creation
         return redirect('grafana_app:home')
     
     else:
@@ -51,7 +50,6 @@ def login_page(request) -> render:
                 # Login into system
                 login(request, user)
                 messages.success(request, f'Successfully logged in: {request.user.username}!')
-                # TODO add propper redirect to home page after its creation
                 return redirect('grafana_app:home')
             
             else:
@@ -78,5 +76,43 @@ def logout_page(request) -> render:
     """
     logout(request)
     messages.success(request, 'Successfully logged out from application!')
-    # TODO add redirect to login page after its creation
     return redirect('login_app:login')
+
+def register_page(request) -> render:
+    """
+    Function view responsible for new user registration to application system:
+        * If POST request has been sent - try to register user/ detected invalid credentials,
+        * Add messages to display,
+        * Login and redirect user to home page.
+        
+    Args:
+        request : Request sent by user.
+
+    Returns:
+        render : Rendering propper html template.
+    """
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'User with given username already in our database!')
+        
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'User with given e-mail address already exist in our database!')
+        
+        else:
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
+            messages.success(request, f'Successfully registered - welcome: {username}!')
+            login(request, user)
+            return redirect('grafana_app:home')
+    return render(
+        request,
+        'register.html',
+        {}
+    )

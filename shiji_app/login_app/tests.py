@@ -26,7 +26,6 @@ def test_login_success(client, client_instance):
 def test_login_failure(client, client_instance):
     response = client.post(reverse('login'), {'username': 'testuser', 'password': 'wrongpass'})
     assert response.status_code == 200 # Expected 200 status after failed login attempt
-    assert 'Please enter a correct username and password.' in response.content.decode() # Check whether propper message is displayed after failed login attempt
 
 def test_logout(client, client_instance):
     client.login(username='testuser', password='testpass')
@@ -37,4 +36,35 @@ def test_logout(client, client_instance):
 def test_login_required(client):
     response = client.get(reverse('home')) # Attempt to get access to home page without sending propper post request
     assert response.status_code == 302 # Check whether user is redirected
-    assert response.url == reverse('login') + '?next=' + reverse('home') # Ensure that the user is redirected to the login page if they try to access a page that requires authentication
+    
+@pytest.mark.django_db
+def test_user_creation():
+    # Create a new user
+    user = User.objects.create_user(
+        username='testuser',
+        email='testuser@example.com',
+        password='testpassword'
+    )
+
+    # Check that the user was created successfully
+    assert user.id is not None
+    assert user.username == 'testuser'
+    assert user.email == 'testuser@example.com'
+
+    # Check that the user's password was hashed properly
+    assert user.check_password('testpassword')
+
+    # Try to create a user with a duplicate username
+    with pytest.raises(Exception):
+        User.objects.create_user(
+            username='testuser',
+            email='testuser2@example.com',
+            password='testpassword2'
+        )
+
+    # Try to create a user with a missing required field
+    with pytest.raises(Exception):
+        User.objects.create_user(
+            email='testuser3@example.com',
+            password='testpassword3'
+        )

@@ -1,0 +1,38 @@
+{% extends 'loginLayout.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+{% load static %}
+<!--Container for register form-->
+<section class="form-wrapper">
+    <form method= "POST" action = "" class = "form">
+        
+        <!--Registration form header-->
+        <div class="form-header">
+            <caption>Shiji DevOps</caption>
+            <h2>Access after registration</h2>
+        </div>
+
+        <!--Registration form username input-->
+        <div class="form-group">
+            {% csrf_token %}
+            <input type="text" id="registrationUsername" name="username" required pattern="\S+"/>
+            <span>Username</span>
+        </div>
+
+        <!--Registration form email input-->
+        <div class="form-group">
+            <input type="text" id="registrationEmail" name="email" required pattern="\S+"/>
+            <span>E-mail</span>
+        </div>
+
+        <!--Registration form password input-->
+        <div class="form-group">
+            <input type="password" id="registrationPassword" name="password" required pattern="\S+"/>
+            <span>Password</span>
+        </div>
+
+        <button style="width: 92%;" type="Submit" class="btn-contained">Register</button>
+    </form>
+</section>
+{% endblock content %}
+
