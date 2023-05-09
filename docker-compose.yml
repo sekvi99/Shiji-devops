@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   app:
@@ -7,12 +7,32 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "8000:8000"
+      - 8000:8000
     command: python manage.py runserver 0.0.0.0:8000
 
   prometheus:
     image: prom/prometheus
+    restart: 'no'
     volumes:
+      - prometheus_data:/prometheus
       - ./prometheus/:/etc/prometheus/
     ports:
-      - "9090:9090"
+      - 9090:9090
+    network_mode: bridge
+  
+  grafana:
+    image: grafana/grafana
+    environment:
+      GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
+    restart: 'no'
+    volumes:
+      - grafana_data:/var/lib/grafana
+    ports:
+      - 3000:3000
+    depends_on:
+      - prometheus
+    network_mode: bridge
+
+volumes:
+    prometheus_data: {}
+    grafana_data: {}

@@ -1,0 +1,1 @@
+Add propper requirements installation -> conatiner does not start for app.
