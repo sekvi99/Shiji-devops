@@ -1,11 +1,15 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from typing import Final
+from .utils import CurrencyRatesAPIConnectorHandler
 
+API_CONNECTION_STRING: Final[str] = 'https://www.bankier.pl/new-charts/get-data?symbol={currency}PLN&intraday=false&type=area&max_period=true'
 
 @login_required(login_url='/login/')
 def home(request) -> render:
-    
+    eur = CurrencyRatesAPIConnectorHandler('usd')
+    eur.set_api_endpoint(API_CONNECTION_STRING)
+    eur.preprocess_api_output()
     context = {}
     return render(
         request,
