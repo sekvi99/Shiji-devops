@@ -1,1 +1,1 @@
-Add propper requirements installation -> conatiner does not start for app.
+Fix saving data from api to propper defined model.
