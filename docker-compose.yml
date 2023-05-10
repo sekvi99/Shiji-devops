@@ -15,10 +15,8 @@ services:
     restart: 'no'
     volumes:
       - prometheus_data:/prometheus
-      - ./prometheus/:/etc/prometheus/
     ports:
       - 9090:9090
-    network_mode: bridge
   
   grafana:
     image: grafana/grafana
@@ -31,7 +29,6 @@ services:
       - 3000:3000
     depends_on:
       - prometheus
-    network_mode: bridge
 
 volumes:
     prometheus_data: {}
