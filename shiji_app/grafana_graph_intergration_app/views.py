@@ -2,11 +2,17 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from typing import Final
 from .utils import CurrencyRatesAPIConnectorHandler
+from .graph_utils import PlotlyGraphHandler
+from .models import EurCurrencyModel, GBPCurrencyModel, USDCurrencyModel
+from typing import Any
 
 API_CONNECTION_STRING: Final[str] = 'https://www.bankier.pl/new-charts/get-data?symbol={currency}PLN&intraday=false&type=area&max_period=true'
 
 @login_required(login_url='/login/')
 def home(request) -> render:
+    eur_graph = None
+    usd_graph = None
+    gbp_graph = None
     
     # ! Refresh Euro data
     eur = CurrencyRatesAPIConnectorHandler('eur')
@@ -23,7 +29,18 @@ def home(request) -> render:
     gbp.set_api_endpoint(API_CONNECTION_STRING)
     gbp.preprocess_api_output()
     
-    context = {}
+    try:
+        eur_graph = PlotlyGraphHandler.generate_graph(EurCurrencyModel.objects.values())
+        usd_graph = PlotlyGraphHandler.generate_graph(USDCurrencyModel.objects.values())
+        gbp_graph = PlotlyGraphHandler.generate_graph(GBPCurrencyModel.objects.values())
+    except Exception as e:
+        print(str(e))
+    
+    context: dict[str, Any] = {
+            'eur_graph':eur_graph,
+            'usd_graph':usd_graph,
+            'gbp_graph':gbp_graph
+            }
     return render(
         request,
         'pages/dashboard.html',
