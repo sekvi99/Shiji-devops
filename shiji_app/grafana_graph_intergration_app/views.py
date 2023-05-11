@@ -7,9 +7,22 @@ API_CONNECTION_STRING: Final[str] = 'https://www.bankier.pl/new-charts/get-data?
 
 @login_required(login_url='/login/')
 def home(request) -> render:
-    eur = CurrencyRatesAPIConnectorHandler('usd')
+    
+    # ! Refresh Euro data
+    eur = CurrencyRatesAPIConnectorHandler('eur')
     eur.set_api_endpoint(API_CONNECTION_STRING)
     eur.preprocess_api_output()
+    
+    # ! Refresh USD data
+    usd = CurrencyRatesAPIConnectorHandler('usd')
+    usd.set_api_endpoint(API_CONNECTION_STRING)
+    usd.preprocess_api_output()
+    
+    # ! Refresh GBP data
+    gbp = CurrencyRatesAPIConnectorHandler('gbp')
+    gbp.set_api_endpoint(API_CONNECTION_STRING)
+    gbp.preprocess_api_output()
+    
     context = {}
     return render(
         request,

@@ -44,7 +44,7 @@ class USDCurrencyModel(models.Model):
         Returns:
             str: String representation of object in admin panel.
         """
-        return f'USD: {self.eur} for Date: {self.date}'
+        return f'USD: {self.usd} for Date: {self.date}'
     
     class Meta:
         """
@@ -70,7 +70,7 @@ class GBPCurrencyModel(models.Model):
         Returns:
             str: String representation of object in admin panel.
         """
-        return f'GBP: {self.eur} for Date: {self.date}'
+        return f'GBP: {self.gbp} for Date: {self.date}'
     
     class Meta:
         """

@@ -5,6 +5,7 @@ import requests
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
 from typing import Any, Final
+from .models import EurCurrencyModel, USDCurrencyModel, GBPCurrencyModel
 import re
 
 # Constant for mapping currency name to propper django model
@@ -13,6 +14,14 @@ CURRENCY_TO_MODEL_MAPPER: Final[dict[str, str]] = dict({
     'euro': 'EurCurrencyModel',
     'gbp': 'GBPCurrencyModel'
 })
+
+class CurrencyUnknownTypeError(Exception):
+    """
+    Definition of custom error class that occures when provided unknown currency type.
+    """
+    def __init__(self, message) -> None:
+        self.message = message
+        super(Exception, self).__init__(message)
 
 @dataclass
 class APIConnectorHandler(ABC):
@@ -115,19 +124,31 @@ class CurrencyRatesAPIConnectorHandler(APIConnectorHandler):
         """
         for item in data['navigator']:
             # Extracing date and value from api request
-            print(item[0])
             date = self.format_currency_timestamp_to_date(item[0])
             currency_value = item[1]
-            
-            # Trying to extract model instance object for given date
-            propper_model_class = self.get_model_class(CURRENCY_TO_MODEL_MAPPER.get(currency))
-            currency_existing_instance = propper_model_class.objects.filter(date = date)
+            if currency == 'usd':
+                currency_existing_instance = USDCurrencyModel.objects.filter(date = date, usd  = currency_value)
+            elif currency == 'eur':
+                currency_existing_instance = EurCurrencyModel.objects.filter(date = date, eur = currency_value)
+            elif currency == 'gbp':
+                currency_existing_instance = GBPCurrencyModel.objects.filter(date = date, gbp = currency_value)
+            else:
+                raise CurrencyUnknownTypeError('Provided wrong currency type!')
             
             if currency_existing_instance:
                 ...
             else:
-                new_instance = propper_model_class(date, currency_value)
-                new_instance.save()
+                if currency == 'usd':
+                    new_instance = USDCurrencyModel(date = date, usd = currency_value)
+                    new_instance.save()
+                    
+                elif currency == 'eur':
+                    new_instance = EurCurrencyModel(date = date, eur = currency_value)
+                    new_instance.save()
+                    
+                elif currency == 'gbp':
+                    new_instance = GBPCurrencyModel(date = date, gbp = currency_value)
+                    new_instance.save()
             
         
         
