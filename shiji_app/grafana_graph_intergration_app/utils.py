@@ -4,12 +4,11 @@ from django.apps import apps
 import requests
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
-from typing import Any, Final
 from .models import EurCurrencyModel, USDCurrencyModel, GBPCurrencyModel
 import re
 
 # Constant for mapping currency name to propper django model
-CURRENCY_TO_MODEL_MAPPER: Final[dict[str, str]] = dict({
+CURRENCY_TO_MODEL_MAPPER = dict({
     'usd': 'USDCurrencyModel',
     'euro': 'EurCurrencyModel',
     'gbp': 'GBPCurrencyModel'
@@ -114,7 +113,7 @@ class CurrencyRatesAPIConnectorHandler(APIConnectorHandler):
         else:
             raise SyntaxError(f'Invalid syntax of provided url string!')
     
-    def process_extracted_currency_rate_data(self, data: dict[Any], currency: str) -> None:
+    def process_extracted_currency_rate_data(self, data: dict, currency: str) -> None:
         """
         Method for saving new instance object to propper model based on passed currency type.
 

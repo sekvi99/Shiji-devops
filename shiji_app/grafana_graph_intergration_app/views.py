@@ -5,48 +5,55 @@ from .utils import CurrencyRatesAPIConnectorHandler
 from .graph_utils import PlotlyGraphHandler
 from .models import EurCurrencyModel, GBPCurrencyModel, USDCurrencyModel
 from typing import Any
+from .metrics import total_requests, request_duration
 
 API_CONNECTION_STRING: Final[str] = 'https://www.bankier.pl/new-charts/get-data?symbol={currency}PLN&intraday=false&type=area&max_period=true'
 
 @login_required(login_url='/login/')
 def home(request) -> render:
-    eur_graph = None
-    usd_graph = None
-    gbp_graph = None
     
-    # ! Refresh Euro data
-    eur = CurrencyRatesAPIConnectorHandler('eur')
-    eur.set_api_endpoint(API_CONNECTION_STRING)
-    eur.preprocess_api_output()
+    # Increment the total requests counter
+    total_requests.labels(request.method, '/').inc()
     
-    # ! Refresh USD data
-    usd = CurrencyRatesAPIConnectorHandler('usd')
-    usd.set_api_endpoint(API_CONNECTION_STRING)
-    usd.preprocess_api_output()
-    
-    # ! Refresh GBP data
-    gbp = CurrencyRatesAPIConnectorHandler('gbp')
-    gbp.set_api_endpoint(API_CONNECTION_STRING)
-    gbp.preprocess_api_output()
-    
-    try:
-        eur_graph = PlotlyGraphHandler.generate_graph(EurCurrencyModel.objects.values())
-        usd_graph = PlotlyGraphHandler.generate_graph(USDCurrencyModel.objects.values())
-        gbp_graph = PlotlyGraphHandler.generate_graph(GBPCurrencyModel.objects.values())
-    except Exception as e:
-        print(str(e))
-    
-    context: dict[str, Any] = {
-            'eur_graph':eur_graph,
-            'usd_graph':usd_graph,
-            'gbp_graph':gbp_graph
-            }
-    return render(
-        request,
-        'pages/dashboard.html',
-        context
-    )
-    
+    # Measure the request duration
+    with request_duration.labels(request.method, '/').time():
+        eur_graph = None
+        usd_graph = None
+        gbp_graph = None
+
+        # ! Refresh Euro data
+        eur = CurrencyRatesAPIConnectorHandler('eur')
+        eur.set_api_endpoint(API_CONNECTION_STRING)
+        eur.preprocess_api_output()
+
+        # ! Refresh USD data
+        usd = CurrencyRatesAPIConnectorHandler('usd')
+        usd.set_api_endpoint(API_CONNECTION_STRING)
+        usd.preprocess_api_output()
+
+        # ! Refresh GBP data
+        gbp = CurrencyRatesAPIConnectorHandler('gbp')
+        gbp.set_api_endpoint(API_CONNECTION_STRING)
+        gbp.preprocess_api_output()
+
+        try:
+            eur_graph = PlotlyGraphHandler.generate_graph(EurCurrencyModel.objects.values())
+            usd_graph = PlotlyGraphHandler.generate_graph(USDCurrencyModel.objects.values())
+            gbp_graph = PlotlyGraphHandler.generate_graph(GBPCurrencyModel.objects.values())
+        except Exception as e:
+            print(str(e))
+
+        context: dict[str, Any] = {
+                'eur_graph':eur_graph,
+                'usd_graph':usd_graph,
+                'gbp_graph':gbp_graph
+                }
+        return render(
+            request,
+            'pages/dashboard.html',
+            context
+        )
+
 @login_required(login_url='/login/')
 def about(request) -> render:
     

@@ -1,6 +1,5 @@
 from decimal import Decimal
 from plotly.offline import plot
-from typing import Any
 import plotly.graph_objects as go
 import datetime
 
@@ -10,7 +9,7 @@ class PlotlyGraphHandler:
     """
     
     @staticmethod
-    def get_float_fields(record) -> list[Any]:
+    def get_float_fields(record) -> list:
         """
         Static method for checking whether provided key of dictionary is numerical.
         Args:
