@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     
     # ! Own
     'login_app.apps.LoginAppConfig',
-    'api_call_app.apps.ApiCallAppConfig',
     'grafana_graph_intergration_app.apps.GrafanaGraphIntergrationAppConfig'
 ]
 
