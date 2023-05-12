@@ -7,11 +7,22 @@ from .models import EurCurrencyModel, GBPCurrencyModel, USDCurrencyModel
 from typing import Any
 from .metrics import total_requests, request_duration
 
+from prometheus_client.core import CollectorRegistry
+from prometheus_client import Counter, Histogram
+
 API_CONNECTION_STRING: Final[str] = 'https://www.bankier.pl/new-charts/get-data?symbol={currency}PLN&intraday=false&type=area&max_period=true'
 
 @login_required(login_url='/login/')
 def home(request) -> render:
-    
+    """
+    Default function based view for / enpdpoint. Generating api calls and interactive dashboard.
+
+    Args:
+        request (_type_): User request.
+
+    Returns:
+        render: Render view of / endpoint.
+    """
     # Increment the total requests counter
     total_requests.labels(request.method, '/').inc()
     
@@ -56,7 +67,15 @@ def home(request) -> render:
 
 @login_required(login_url='/login/')
 def about(request) -> render:
-    
+    """
+    Function based view for about page. /about
+
+    Args:
+        request (_type_): User request.
+
+    Returns:
+        render: Render view of about endpoint.
+    """
     techstack: Final[list] = [
         {'title': 'Python', 'body': 'Python is a popular high-level programming language known for its simplicity, readability, and versatility. It is used for a wide range of applications, including web development, data analysis, artificial intelligence, and more.'},
         {'title': 'Django', 'body': ' Django is a free and open-source web framework for Python, designed to help developers build web applications quickly and easily. It includes a wide range of tools and features for handling common web development tasks, such as routing, templating, authentication, and more.'},
