@@ -1,35 +1,48 @@
-version: '3.10'
+version: '3.7'
 
 services:
-  app:
-    container_name: app
+  django:
+    container_name: django
     build:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 8000:8000
+      - "8000:8000"
     command: python manage.py runserver 0.0.0.0:8000
+    networks:
+      - app-network
+    hostname: django
 
   prometheus:
     image: prom/prometheus
-    restart: 'no'
     volumes:
-      - prometheus_data:/prometheus
+      - ./prometheus/:/etc/prometheus/
     ports:
-      - 9090:9090
+      - "9090:9090"
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    networks:
+      - app-network
+
   
+  # Grafana service
   grafana:
     image: grafana/grafana
+    container_name: grafana
     environment:
       GF_INSTALL_PLUGINS: "grafana-clock-panel,grafana-simple-json-datasource"
-    restart: 'no'
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
     volumes:
-      - grafana_data:/var/lib/grafana
+      - ./grafana/datasources:/etc/grafana/datasources
+      - ./grafana/dashboards:/etc/grafana/dashboards
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - prometheus
+    networks:
+      - app-network
 
-volumes:
-    prometheus_data: {}
-    grafana_data: {}
+networks:
+  app-network: 

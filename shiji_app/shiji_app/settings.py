@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-q2r10be@pdsjmgtbl^o((we74kj#^f070qb1h#-_n%1yz@=v-z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -29,12 +29,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
-    # ! django prometheus
-    'django_prometheus',
-    
     # ! Own
     'login_app.apps.LoginAppConfig',
-    'grafana_graph_intergration_app.apps.GrafanaGraphIntergrationAppConfig'
+    'grafana_graph_intergration_app.apps.GrafanaGraphIntergrationAppConfig',
+    
+    # ! django prometheus
+    'django_prometheus',
 ]
 
 MIDDLEWARE = [
