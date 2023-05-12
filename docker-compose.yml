@@ -1,6 +1,7 @@
 version: '3.7'
 
 services:
+  # Django web application service
   django:
     container_name: django
     build:
@@ -13,6 +14,7 @@ services:
       - app-network
     hostname: django
 
+  # Prometheus metics/ logs service
   prometheus:
     image: prom/prometheus
     volumes:
@@ -25,7 +27,6 @@ services:
     networks:
       - app-network
 
-  
   # Grafana service
   grafana:
     image: grafana/grafana

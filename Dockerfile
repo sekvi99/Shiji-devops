@@ -13,8 +13,11 @@ RUN pip install --no-cache-dir --upgrade pip setuptools
 COPY ./requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy project structure
 COPY ./shiji_app /app
 
+# Set working dir
 WORKDIR /app
 
+# Run migrations
 RUN python manage.py migrate
