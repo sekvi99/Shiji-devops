@@ -3,7 +3,7 @@ FROM python:3.8-slim
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
-    python-dev \
+    python-dev-is-python3 \
     python3-dev
 
 # Upgrading pip
